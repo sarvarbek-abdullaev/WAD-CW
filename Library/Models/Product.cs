@@ -9,5 +9,6 @@ namespace Library.models
         public string Description { get; set; }
         public decimal Price { get; set; }
         public Category ProductCategory { get; set; }
+        public int ProductCategoryId { get; set; }
     }
 }
