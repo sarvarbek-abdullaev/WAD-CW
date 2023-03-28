@@ -12,6 +12,6 @@ namespace API.Interfaces
         void DeleteCategory(int categoryid);
         Task<Category> GetCategoryById(int Id);
         Task<IEnumerable<Category>> GetCategory();
-        //void UpdateCategory(Category category);
+        void UpdateCategory(Category category);
     }
 }

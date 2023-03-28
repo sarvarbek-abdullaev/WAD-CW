@@ -37,10 +37,10 @@ namespace API.Repositories
             _dbContext.Add(category);
         }
 
-        //public void UpdateCategory(Category category)
-        //{
-        //    _dbContext.Entry(category).State = EntityState.Modified;
-        //}
-        
+        public void UpdateCategory(Category category)
+        {
+            _dbContext.Entry(category).State = EntityState.Modified;
+        }
+
     }
 }

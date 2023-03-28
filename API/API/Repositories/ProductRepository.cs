@@ -27,7 +27,9 @@ namespace API.Repositories
         public Product GetProductById(int productId)
         {
             var prod = _dbContext.Products.Find(productId);
-            _dbContext.Entry(prod).Reference(s => s.ProductCategory).Load();
+            if(prod != null) { 
+                _dbContext.Entry(prod).Reference(s => s.ProductCategory).Load();
+            }
             return prod;
         }
         public async Task<IEnumerable<Product>> GetProductsAsync()

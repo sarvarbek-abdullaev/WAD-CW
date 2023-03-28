@@ -34,6 +34,8 @@ namespace API.Controllers
         public IActionResult Get(int id)
         {
             var product = uow.ProductRepository.GetProductById(id);
+            if(product == null) return BadRequest("Not available ID written");
+
             var productDto = mapper.Map<ProductDto>(product);
             return new OkObjectResult(productDto);
         }
@@ -41,6 +43,8 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(ProductDto productDto)
         {
+            if (productDto == null) return BadRequest("Product cannnot be null");
+
             var product = mapper.Map<Product>(productDto);
             product.LastUpdatedOn = DateTime.Now;
             uow.ProductRepository.InsertProduct(product);
@@ -49,22 +53,23 @@ namespace API.Controllers
         }
         // PUT: api/Product/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put( ProductDto productDto)
+        public async Task<IActionResult> Put( ProductDto productDto, int id)
         {
-            if (productDto != null)
-            {
-                var product = mapper.Map<Product>(productDto);
-                product.LastUpdatedOn = DateTime.Now;
-                uow.ProductRepository.UpdateProduct(product);
-                await uow.SaveAsync();
-                return StatusCode(200);
-            }
-            return new NoContentResult();
+            if (id != productDto.ID || productDto == null) return BadRequest("Update Not Allowed");
+
+            var product = mapper.Map<Product>(productDto);
+            product.LastUpdatedOn = DateTime.Now;
+            uow.ProductRepository.UpdateProduct(product);
+            await uow.SaveAsync();
+            return StatusCode(200);
         }
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            var product = uow.ProductRepository.GetProductById(id);
+            if (product == null) return BadRequest("Delete Not Allowed, Reason: Not available ID written");
+
             uow.ProductRepository.DeleteProduct(id);
             await uow.SaveAsync();
             return Ok(id);

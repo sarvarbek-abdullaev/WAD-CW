@@ -34,6 +34,9 @@ namespace API.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var category = await uow.CategoryRepository.GetCategoryById(id);
+            if (category == null) return BadRequest("Not available ID written");
+
+            //var category = await uow.CategoryRepository.GetCategoryById(id);
             var categoryDto = mapper.Map<CategoryDto>(category);
             return new OkObjectResult(categoryDto);
         }
@@ -41,6 +44,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(CategoryDto categoryDto)
         {
+            if (categoryDto == null) return BadRequest("Category cannot be null");
             var category = mapper.Map<Category>(categoryDto);
             category.LastUpdatedOn = DateTime.Now;
             uow.CategoryRepository.InsertCategory(category);
@@ -49,23 +53,25 @@ namespace API.Controllers
         }
         // PUT: api/Category/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Category categoryDto)
+        public async Task<IActionResult> Put(int id, CategoryDto categoryDto)
         {
-            if (categoryDto != null)
-            {
-                var categoryFromDb = await uow.CategoryRepository.GetCategoryById(id);
-                categoryFromDb.LastUpdatedOn = DateTime.Now;
-                mapper.Map(categoryDto, categoryFromDb);
+            if (id != categoryDto.ID || categoryDto == null) return BadRequest("Update Not Allowed");
 
-                await uow.SaveAsync();
-                return StatusCode(200);
-            }
-            return new NoContentResult();
+            var category = mapper.Map<Category>(categoryDto);
+            category.LastUpdatedOn = DateTime.Now;
+            uow.CategoryRepository.UpdateCategory(category);
+            await uow.SaveAsync();
+            return StatusCode(200);
+            //var categoryFromDb = await uow.CategoryRepository.GetCategoryById(id);
+            //mapper.Map(categoryDto, categoryFromDb);
         }
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            var category = await uow.CategoryRepository.GetCategoryById(id);
+            if(category == null) return BadRequest("Delete Not Allowed, Reason: Not available ID written");
+
             uow.CategoryRepository.DeleteCategory(id);
             await uow.SaveAsync();
             return Ok(id);
