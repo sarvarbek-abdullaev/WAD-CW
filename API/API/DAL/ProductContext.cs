@@ -11,7 +11,7 @@ namespace API.DAL
             // Constructer
         public ProductContext(DbContextOptions<ProductContext> o) : base(o)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         // Product Database

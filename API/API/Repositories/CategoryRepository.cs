@@ -22,10 +22,10 @@ namespace API.Repositories
             var category = _dbContext.Categories.Find(categoryid);
             _dbContext.Categories.Remove(category);
         }
-        public Category GetCategoryById(int Id)
+        public async Task<Category> GetCategoryById(int Id)
         {
-            var cate = _dbContext.Categories.Find(Id);
-            return cate;
+            return await _dbContext.Categories.FindAsync(Id);
+           
         }
         public async Task<IEnumerable<Category>> GetCategory()
         {
@@ -37,13 +37,10 @@ namespace API.Repositories
             _dbContext.Add(category);
         }
 
-        public void UpdateCategory(Category category)
-        {
-            _dbContext.Entry(category).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-        }
-        public void Save()
-        {
-            _dbContext.SaveChanges();
-        }
+        //public void UpdateCategory(Category category)
+        //{
+        //    _dbContext.Entry(category).State = EntityState.Modified;
+        //}
+        
     }
 }

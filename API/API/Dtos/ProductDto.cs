@@ -1,8 +1,8 @@
-﻿using System;
+﻿using API.Models;
 
-namespace API.Models
+namespace API.Dtos
 {
-    public class Product
+    public class ProductDto
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -10,6 +10,5 @@ namespace API.Models
         public decimal Price { get; set; }
         public Category ProductCategory { get; set; }
         public int ProductCategoryId { get; set; }
-        public DateTime LastUpdatedOn { get; set; }
     }
 }

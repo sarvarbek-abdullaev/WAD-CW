@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using AutoMapper;
+using API.Helpers;
 
 namespace API
 {
@@ -23,6 +25,7 @@ namespace API
         {
             services.AddControllers();
             services.AddDbContext<ProductContext>(o => o.UseSqlServer(Configuration.GetConnectionString("CW")));
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 

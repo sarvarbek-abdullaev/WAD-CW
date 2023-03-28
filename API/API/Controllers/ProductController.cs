@@ -1,6 +1,10 @@
-﻿using API.Interfaces;
+﻿using API.Dtos;
+using API.Interfaces;
 using API.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -10,58 +14,60 @@ namespace API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductRepository _productRepository;
-        public ProductController(IProductRepository productRepository)
+        private readonly IUnitOfWork uow;
+        private readonly IMapper mapper;
+        public ProductController(IUnitOfWork uow, IMapper mapper)
         {
-            _productRepository = productRepository;
+            this.uow = uow;
+            this.mapper = mapper;
         }
         // GET: api/Product
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var products = await _productRepository.GetProducts();
-            return new OkObjectResult(products);
+            var products = await uow.ProductRepository.GetProductsAsync();
+            var productsDto = mapper.Map<IEnumerable<ProductDto>>(products);
+            return new OkObjectResult(productsDto);
         }
         // GET: api/Product/5
         [HttpGet, Route("{id}", Name = "GetP")]
         public IActionResult Get(int id)
         {
-            var product = _productRepository.GetProductById(id);
-            return new OkObjectResult(product);
-            //return "value";
+            var product = uow.ProductRepository.GetProductById(id);
+            var productDto = mapper.Map<ProductDto>(product);
+            return new OkObjectResult(productDto);
         }
         // POST: api/Product
         [HttpPost]
-        public IActionResult Post([FromBody] Product product)
+        public async Task<IActionResult> Add(ProductDto productDto)
         {
-            using (var scope = new TransactionScope())
-            {
-                _productRepository.InsertProduct(product);
-                scope.Complete();
-                return CreatedAtAction(nameof(Get), new { id = product.ID }, product);
-            }
+            var product = mapper.Map<Product>(productDto);
+            product.LastUpdatedOn = DateTime.Now;
+            uow.ProductRepository.InsertProduct(product);
+            await uow.SaveAsync();
+            return StatusCode(201);
         }
         // PUT: api/Product/5
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody] Product product)
+        public async Task<IActionResult> Put( ProductDto productDto)
         {
-            if (product != null)
+            if (productDto != null)
             {
-                using (var scope = new TransactionScope())
-                {
-                    _productRepository.UpdateProduct(product);
-                    scope.Complete();
-                    return new OkResult();
-                }
+                var product = mapper.Map<Product>(productDto);
+                product.LastUpdatedOn = DateTime.Now;
+                uow.ProductRepository.UpdateProduct(product);
+                await uow.SaveAsync();
+                return StatusCode(200);
             }
             return new NoContentResult();
         }
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _productRepository.DeleteProduct(id);
-            return new OkResult();
+            uow.ProductRepository.DeleteProduct(id);
+            await uow.SaveAsync();
+            return Ok(id);
         }
     }
 }

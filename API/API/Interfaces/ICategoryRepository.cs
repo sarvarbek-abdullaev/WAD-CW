@@ -9,9 +9,9 @@ namespace API.Interfaces
     public interface ICategoryRepository
     {
         void InsertCategory(Category category);
-        void UpdateCategory(Category category);
         void DeleteCategory(int categoryid);
-        Category GetCategoryById(int Id);
+        Task<Category> GetCategoryById(int Id);
         Task<IEnumerable<Category>> GetCategory();
+        //void UpdateCategory(Category category);
     }
 }
