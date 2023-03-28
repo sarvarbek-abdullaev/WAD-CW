@@ -36,7 +36,6 @@ namespace API.Controllers
             var category = await uow.CategoryRepository.GetCategoryById(id);
             if (category == null) return BadRequest("Not available ID written");
 
-            //var category = await uow.CategoryRepository.GetCategoryById(id);
             var categoryDto = mapper.Map<CategoryDto>(category);
             return new OkObjectResult(categoryDto);
         }
