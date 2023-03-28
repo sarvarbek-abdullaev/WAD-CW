@@ -1,5 +1,5 @@
-﻿using API.Models;
-using API.Repositories;
+﻿using API.Interfaces;
+using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -10,57 +10,52 @@ namespace API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly ICategoryRepository _categoryRepository;
-        public CategoryController(ICategoryRepository categoryRepository)
+        private readonly IUnitOfWork uow;
+        public CategoryController(IUnitOfWork uow)
         {
-            _categoryRepository = categoryRepository;
+            this.uow = uow;
         }
         // GET: api/Category
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var category = await _categoryRepository.GetCategory();
+            var category = await uow.CategoryRepository.GetCategory();
             return new OkObjectResult(category);
         }
         // GET: api/Category/5
         [HttpGet("{id}", Name = "GetC")]
         public IActionResult Get(int id)
         {
-            var category = _categoryRepository.GetCategoryById(id);
+            var category = uow.CategoryRepository.GetCategoryById(id);
             return new OkObjectResult(category);
         }
         // POST: api/Category
         [HttpPost]
-        public IActionResult Post([FromBody] Category category)
+        public async Task<IActionResult>  Add(Category category)
         {
-            using (var scope = new TransactionScope())
-            {
-                _categoryRepository.InsertCategory(category);
-                scope.Complete();
-                return CreatedAtAction(nameof(Get), new { id = category.ID }, category);
-            }
+            uow.CategoryRepository.InsertCategory(category);
+            await uow.SaveAsync();
+            return StatusCode(201);
         }
         // PUT: api/Category/5
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody] Category category)
+        public async Task<IActionResult> Put( Category category)
         {
             if (category != null)
             {
-                using (var scope = new TransactionScope())
-                {
-                    _categoryRepository.UpdateCategory(category);
-                    scope.Complete();
-                    return new OkResult();
-                }
+                uow.CategoryRepository.UpdateCategory(category);
+                await uow.SaveAsync();
+                return StatusCode(200);
             }
             return new NoContentResult();
         }
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _categoryRepository.DeleteCategory(id);
-            return new OkResult();
+            uow.CategoryRepository.DeleteCategory(id);
+            await uow.SaveAsync();
+            return Ok(id);
         }
     }
 }

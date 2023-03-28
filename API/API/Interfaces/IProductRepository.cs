@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace API.Repositories
+namespace API.Interfaces
 {
     public interface IProductRepository
     {

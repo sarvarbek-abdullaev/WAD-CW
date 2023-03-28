@@ -1,4 +1,5 @@
 ﻿using API.DAL;
+using API.Interfaces;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,7 +21,6 @@ namespace API.Repositories
         {
             var category = _dbContext.Categories.Find(categoryid);
             _dbContext.Categories.Remove(category);
-            Save();
         }
         public Category GetCategoryById(int Id)
         {
@@ -35,7 +35,6 @@ namespace API.Repositories
         public void InsertCategory(Category category)
         {
             _dbContext.Add(category);
-            Save();
         }
 
         public void UpdateCategory(Category category)
