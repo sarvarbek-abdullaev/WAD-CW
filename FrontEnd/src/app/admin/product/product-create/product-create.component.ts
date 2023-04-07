@@ -10,7 +10,7 @@ import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms'
 })
 export class ProductCreateComponent implements OnInit {
 
-  item: any = { name: '', description: '', price: null, ProductCategoryId: null }; // initialize to empty object for create
+  item: any = { name: '', description: '', price: null, image: '', ProductCategoryId: null }; // initialize to empty object for create
   itemId!: number;
   categories: any;
 
@@ -18,8 +18,9 @@ export class ProductCreateComponent implements OnInit {
 
   saveItem() {
     if (this.itemId) {
+      console.log(this.item);
       this.service.updateProductById(this.itemId, this.item ).subscribe( {
-        next: () => this.router.navigate(["/admin/products"]),
+        next: () => {console.log(this.item); this.router.navigate(["/admin/products"]) },
         error: (e) => console.error(e),
       })
     } else {

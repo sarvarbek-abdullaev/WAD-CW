@@ -8,7 +8,11 @@
         <form class="d-grid gap-3">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Product Name" [ngModel]="item.name">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Category Name" [(ngModel)]="item.name">
+          </div>
+          <div class="form-group">
+            <label for="name">Image Link</label>
+            <input type="text" class="form-control" id="image" name="image" placeholder="Image Link" [(ngModel)]="item.image">
           </div>
           <div class="form-group">
             <label for="description">Description</label>

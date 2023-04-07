@@ -7,10 +7,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CategoryCardComponent implements OnInit {
   @Input() Property : any
-
   constructor() { }
 
   ngOnInit() {
+    if(this.Property.image == null) {
+      this.Property.image = "/assets/1x1.jpg"
+    }
   }
 
 }

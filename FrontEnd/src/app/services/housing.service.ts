@@ -37,19 +37,39 @@ export class HousingService {
   }
 
   updateProductById(id :number, product: any) {
-    return this.http.put(this.mainUrl + "api/Product/" + id, product )
+    return this.http.put(this.mainUrl + "api/Product/" + id, {
+      "id": id,
+      "name": product.name,
+      "description": product.description,
+      "price": product.price,
+      "ProductCategoryId": product.ProductCategory.Id
+    })
   }
 
   updateCategoryById(id :number, category: any) {
-    return this.http.put(this.mainUrl + "api/Category/" + id, category )
+    return this.http.put(this.mainUrl + "api/Category/" + id, {
+      "id": id,
+      "name": category.name,
+      "image": category.image,
+      "description": category.description
+    })
   }
 
   createProduct(product: any) {
-    return this.http.post(this.mainUrl + "api/Product/", product )
+    return this.http.post(this.mainUrl + "api/Product/", {
+      "name": product.name,
+      "description": product.description,
+      "price": product.price,
+      "ProductCategoryId": product.ProductCategoryId
+    })
   }
 
   createCategory(category: any) {
-    return this.http.post(this.mainUrl + "api/Category/", category )
+    return this.http.post(this.mainUrl + "api/Category/", {
+      "name": category.name,
+      "image": category.image,
+      "description": category.description
+    })
   }
 
 }

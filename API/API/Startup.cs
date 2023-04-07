@@ -12,6 +12,8 @@ namespace API
 {
     public class Startup
     {
+        private const string DataDirectory = "|DataDirectory|";
+        private string _appPath;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -24,6 +26,7 @@ namespace API
         {
             services.AddControllers();
             services.AddDbContext<ProductContext>(o => o.UseSqlServer(Configuration.GetConnectionString("CW")));
+            //services.AddDbContext<ProductContext>(o => o.UseSqlServer(Configuration.GetConnectionString("CW").Replace(DataDirectory, _appPath)));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 

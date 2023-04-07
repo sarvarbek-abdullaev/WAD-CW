@@ -1,0 +1,22 @@
+<div class="row mb-5 flex justify-content-center">
+  <div class="col-8 shadow-lg p-0 bg-white">
+    <div class="card">
+      <div class="card-header text-center">
+        <h3>Product Details</h3>
+      </div>
+      <div class="card-body d-flex gap-4">
+        <div class="w-50" style="height: 500px;">
+          <img class="d-block w-100 h-100 object-fit-cover" src="{{ product.image}}" alt="image">
+        </div>
+        <div class="w-50 d-flex flex-column justify-content-between">
+          <div>
+            <h3 class="fs-4 mb-4"><span class="fs-5 fw-2"> {{ product.name}} </span></h3>
+            <h3 class="fs-4 mb-4"> Category:<span class="fs-5 fw-2"> {{ product.productCategory.name}} </span></h3>
+            <p class="fs-4"> Description:<span class="fs-5 fw-2"> {{ product.description}} </span></p>
+          </div>
+          <button class="button--secondary bg-black text-white py-1">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

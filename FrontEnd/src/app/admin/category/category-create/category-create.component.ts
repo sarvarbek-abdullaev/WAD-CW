@@ -8,20 +8,23 @@ import { HousingService } from 'src/app/services/housing.service';
   styleUrls: ['./category-create.component.css']
 })
 export class CategoryCreateComponent implements OnInit {
-  item: any = { name: '', description: '' }; // initialize to empty object for create
+  item: any = { name: '', description: '', image: '' }; // initialize to empty object for create
   itemId!: number;
 
   constructor(private route: ActivatedRoute, private service: HousingService, private router: Router) {}
 
   saveItem() {
     if (this.itemId) {
+      console.log(this.item);
+
       this.service.updateCategoryById(this.itemId, this.item ).subscribe( {
         next: () => this.router.navigate(["/admin/categories"]),
         error: (e) => console.error(e),
       })
     } else {
       this.service.createCategory(this.item).subscribe({
-        next: () =>  this.router.navigate(["/admin/categories"]) ,
+        next: () => {console.log(this.item);
+          this.router.navigate(["/admin/categories"])} ,
         error: (e) => console.error(e),
       });
     }

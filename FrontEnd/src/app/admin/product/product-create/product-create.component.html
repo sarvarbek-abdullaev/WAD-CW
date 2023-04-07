@@ -20,7 +20,12 @@
               placeholder="Product Price" [(ngModel)]="item.price">
           </div>
           <div class="form-group">
-            <select class="form-control" id="category" name="ProductCategoryId" [(ngModel)]="item.ProductCategory">
+            <label for="image">Image</label>
+            <input type="text" class="form-control" ngModel="binding" id="image" name="image"
+              placeholder="Product Image" [(ngModel)]="item.image">
+          </div>
+          <div class="form-group">
+            <select class="form-control" id="category" name="ProductCategoryId" [(ngModel)]="item.ProductCategoryId">
               <option value="0">Select Category</option>
               <option *ngFor="let c of categories" [ngValue]="c">{{c.name}}</option>
             </select>

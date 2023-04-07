@@ -11,6 +11,9 @@ export class ProductCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if(this.Property.image == null) {
+      this.Property.image = "/assets/1x1.jpg"
+    }
   }
 
 }

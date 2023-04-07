@@ -17,6 +17,23 @@
             Categories
           </a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" routerLink="/admin/categories" routerLinkActive="active">
+            Categories (Admin)</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLinkActiveOptions]="{exact:true}" routerLink="/admin/products" routerLinkActive="active" ariaCurrentWhenActive="page">
+            Products (Admin)</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin/products/create" routerLinkActive="active" ariaCurrentWhenActive="page">
+            New Product</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin/categories/create" routerLinkActive="active" ariaCurrentWhenActive="page">
+            New Category</a>
+        </li>
       </ul>
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
