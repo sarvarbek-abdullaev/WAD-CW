@@ -1,4 +1,5 @@
 using API.DAL;
+using API.Extentions;
 using API.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,12 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using AutoMapper;
-using API.Helpers;
-using System.Net;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
-using API.Extentions;
 
 namespace API
 {
@@ -29,7 +24,6 @@ namespace API
         {
             services.AddControllers();
             services.AddDbContext<ProductContext>(o => o.UseSqlServer(Configuration.GetConnectionString("CW")));
-            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
@@ -41,6 +35,8 @@ namespace API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(m => m.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseEndpoints(endpoints =>
             {

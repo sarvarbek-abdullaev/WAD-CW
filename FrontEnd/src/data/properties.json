@@ -2,19 +2,22 @@
   {
     "Id": 1,
     "Name": "Birla House",
-    "Type": "Hoose",
+    "Type": 1,
+    "Description": "Hoose 1",
     "Price": 1200
   },
   {
     "Id": 2,
     "Name": "Birla House",
-    "Type": "Hoose",
+    "Type": 2,
+    "Description": "Hoose 1",
     "Price": 1400
   },
   {
     "Id": 3,
     "Name": "Birla House",
-    "Type": "Hoose",
+    "Type": 3,
+    "Description": "Hoose 1",
     "Price": 1600
   }
 ]

@@ -1,0 +1,26 @@
+<div class="row mb-5 flex justify-content-center">
+  <div class="col-8 shadow-lg p-0 bg-white">
+    <div class="card">
+      <div class="card-header text-center">
+        <h3>Product Details</h3>
+      </div>
+      <div class="card-body d-flex gap-4">
+        <div class="w-50" style="height: 500px;">
+          <img class="d-block w-100 h-100 object-fit-cover" src="https://picsum.photos/800/800" alt="image">
+        </div>
+        <div class="w-50 d-flex flex-column justify-content-between">
+          <div>
+            <h3 class="fs-4"> Id:<span class="fs-5 fw-2"> {{ property.id}} </span></h3>
+            <h3 class="fs-4"> Name:<span class="fs-5 fw-2"> {{ property.name}} </span></h3>
+            <p class="fs-4"> Description:<span class="fs-5 fw-2"> {{ property.description}} </span></p>
+            <h3 class="fs-4"> Category:<span class="fs-5 fw-2"> {{ property.productCategory.name}} </span></h3>
+          </div>
+          <div class="buttons justify-self-end d-grid gap-3">
+            <button class="btn btn-danger" (click)="deleteProduct()">Delete</button>
+            <button class="btn btn-dark" (click)="goEdit()">Edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

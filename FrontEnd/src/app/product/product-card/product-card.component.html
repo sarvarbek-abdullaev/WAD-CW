@@ -1,0 +1,10 @@
+<div class="card border-0 mb-3">
+  <div class="image-container">
+    <img src="https://picsum.photos/800/800" alt="image">
+  </div>
+  <div class="card-body p-1 text-center">
+    <p class="m-1 fw-bold">{{ Property.name}}</p>
+    <p class="m-1 fw-normal">${{ Property.price}}</p>
+    <a routerLink="/products/{{Property.id}}" class="button button--primary">View Product</a>
+  </div>
+</div>

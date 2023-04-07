@@ -23,16 +23,18 @@ namespace API.Repositories
         {
             var product = _dbContext.Products.Find(productId);
             _dbContext.Products.Remove(product);
+            Save();
         }
         public Product GetProductById(int productId)
         {
             var prod = _dbContext.Products.Find(productId);
-            if(prod != null) { 
+            if (prod != null)
+            {
                 _dbContext.Entry(prod).Reference(s => s.ProductCategory).Load();
             }
             return prod;
         }
-        public async Task<IEnumerable<Product>> GetProductsAsync()
+        public async Task<IEnumerable<Product>> GetProducts()
         {
             return await _dbContext.Products.Include(s => s.ProductCategory).ToListAsync();
         }
@@ -40,10 +42,18 @@ namespace API.Repositories
         {
             product.ProductCategory = _dbContext.Categories.Find(product.ProductCategoryId);
             _dbContext.Add(product);
+            Save();
         }
         public void UpdateProduct(Product product)
         {
-            _dbContext.Entry(product).State = EntityState.Modified;
+            _dbContext.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            Save();
         }
+        public void Save()
+        {
+            _dbContext.SaveChanges();
+        }
+
+
     }
 }

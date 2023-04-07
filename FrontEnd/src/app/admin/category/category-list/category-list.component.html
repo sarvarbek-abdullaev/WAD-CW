@@ -1,0 +1,23 @@
+<p>
+  <a routerLink="create">Create New</a>
+</p>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Image</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categories" routerLink="{{ category.id }}" style="cursor: pointer;">
+      <td>{{ category.id}}</td>
+      <td>{{ category.name}}</td>
+      <td>{{ category.description}}</td>
+      <td>
+        <img src="https://picsum.photos/800/800" width="100" height="100" alt="image">
+      </td>
+    </tr>
+  </tbody>
+</table>
